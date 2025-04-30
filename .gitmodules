@@ -1,0 +1,3 @@
+[submodule "stm32-ros-bernard-node"]
+	path = stm32-ros-bernard-node
+	url = https://github.com/Baey/stm32-ros-bernard-node.git
