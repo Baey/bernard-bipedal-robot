@@ -17,7 +17,7 @@ This submodule contains the **PlatformIO project** for the micro-ROS node, which
 - **Sensor Management**: Reads data from IMU and foot pressure sensors.
 - **GUI**: Displays system status on a TFT screen.
 
-### [Bernard RL](https://github.com/Baey/BERNARD-RL)
+### [Bernard RL](https://github.com/Baey/bernard-rl)
 
 This submodule provides an IsaacLab extension with a reinforcement learning environment for training the robot in simulation. Key features include:
 - **Isolation**: Work outside the core Isaac Lab repository.
