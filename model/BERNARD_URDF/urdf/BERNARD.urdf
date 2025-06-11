@@ -1,0 +1,228 @@
+<robot name="BERNARD" version="1.0">
+  <joint name="l_hip_joint" type="revolute">
+    <dynamics damping="0.01000"/>
+    <limit lower="-0.52360" upper="0.52360" effort="9.00000" velocity="9.00000"/>
+    <origin rpy="0.00000 0.00000 0.00000" xyz="0.04994 -0.01531 0.00081"/>
+    <parent link="body"/>
+    <child link="l_hip"/>
+    <axis xyz="0.00000 1.00000 0.00000"/>
+  </joint>
+  <joint name="l_arm_joint" type="revolute">
+    <dynamics damping="0.01000"/>
+    <limit lower="-0.87266" upper="1.91986" effort="9.00000" velocity="9.00000"/>
+    <origin rpy="0.00000 0.00000 0.00000" xyz="0.05205 0.04685 -0.00010"/>
+    <parent link="l_hip"/>
+    <child link="l_arm"/>
+    <axis xyz="1.00000 0.00000 0.00000"/>
+  </joint>
+  <joint name="l_knee_joint" type="revolute">
+    <dynamics damping="0.01000"/>
+    <limit lower="-1.74533" upper="2.09440" effort="9.00000" velocity="9.00000"/>
+    <origin rpy="0.00000 0.00000 0.00000" xyz="-0.00042 -0.01548 -0.11919"/>
+    <parent link="l_arm"/>
+    <child link="l_forearm"/>
+    <axis xyz="-1.00000 0.00000 0.00000"/>
+  </joint>
+  <joint name="l_foot_joint" type="revolute">
+    <dynamics damping="0.01000"/>
+    <limit lower="-1.39626" upper="1.22173" effort="0.00000" velocity="0.00000"/>
+    <origin rpy="0.00000 0.00000 0.00000" xyz="-0.01749 -0.02000 -0.19000"/>
+    <parent link="l_forearm"/>
+    <child link="l_foot"/>
+    <axis xyz="1.00000 0.00000 0.00000"/>
+  </joint>
+  <joint name="r_hip_joint" type="revolute">
+    <dynamics damping="0.01000"/>
+    <limit lower="-0.52360" upper="0.52360" effort="9.00000" velocity="9.00000"/>
+    <origin rpy="0.00000 0.00000 0.00000" xyz="-0.04994 -0.01531 0.00081"/>
+    <parent link="body"/>
+    <child link="r_hip"/>
+    <axis xyz="0.00000 1.00000 0.00000"/>
+  </joint>
+  <joint name="r_arm_joint" type="revolute">
+    <dynamics damping="0.01000"/>
+    <limit lower="-1.91986" upper="0.87266" effort="9.00000" velocity="9.00000"/>
+    <origin rpy="0.00000 0.00000 0.00000" xyz="-0.05205 0.04685 -0.00010"/>
+    <parent link="r_hip"/>
+    <child link="r_arm"/>
+    <axis xyz="-1.00000 0.00000 0.00000"/>
+  </joint>
+  <joint name="r_knee_joint" type="revolute">
+    <dynamics damping="0.01000"/>
+    <limit lower="-2.09440" upper="1.74533" effort="9.00000" velocity="9.00000"/>
+    <origin rpy="0.00000 0.00000 0.00000" xyz="0.00042 -0.01548 -0.11919"/>
+    <parent link="r_arm"/>
+    <child link="r_forearm"/>
+    <axis xyz="1.00000 0.00000 0.00000"/>
+  </joint>
+  <joint name="r_foot_joint" type="revolute">
+    <dynamics damping="0.01000"/>
+    <limit lower="-1.39626" upper="1.22173" effort="0.00000" velocity="0.00000"/>
+    <origin rpy="0.00000 0.00000 0.00000" xyz="0.01749 -0.02000 -0.19000"/>
+    <parent link="r_forearm"/>
+    <child link="r_foot"/>
+    <axis xyz="1.00000 0.00000 0.00000"/>
+  </joint>
+  <link name="body">
+    <inertial>
+      <inertia ixx="0.00935" ixy="-0.00027" ixz="-0.00024" iyy="0.00514" iyz="-0.00100" izz="0.00906"/>
+      <origin rpy="0.00000 0.00000 0.00000" xyz="0.00372 0.03380 0.00945"/>
+      <mass value="2.10000"/>
+    </inertial>
+    <collision name="Body_collision">
+      <origin rpy="0.00000 0.00000 0.00000" xyz="-0.00001 0.04184 0.00149"/>
+      <geometry>
+        <box size="0.14245 0.20528 0.14803"/>
+      </geometry>
+    </collision>
+    <sensor name="imu_sensor" type="imu">
+      <parent link="body"/>
+    </sensor>
+    <visual name="Body">
+      <origin rpy="1.57079633 0.00000 0.00000" xyz="0.00000 0.00000 0.00000"/>
+      <geometry>
+        <mesh filename="../meshes/obj/Body.obj" scale="1.00000 1.00000 1.00000"/>
+      </geometry>
+    </visual>
+  </link>
+  <link name="l_hip">
+    <inertial>
+      <inertia ixx="0.00017" ixy="0.00002" ixz="0.00000" iyy="0.00003" iyz="0.00000" izz="0.00019"/>
+      <origin rpy="0.00000 0.00000 0.00000" xyz="0.01698 0.06739 -0.00000"/>
+      <mass value="0.08000"/>
+    </inertial>
+    <visual name="L_Hip_Connector">
+      <origin rpy="0.00000 -1.57079633 0.00000" xyz="0.00000 -0.00000 -0.00000"/>
+      <geometry>
+        <mesh filename="../meshes/obj/Hip_Connector.obj" scale="1.00000 1.00000 1.00000"/>
+      </geometry>
+    </visual>
+  </link>
+  <link name="l_arm">
+    <inertial>
+      <inertia ixx="0.00330" ixy="0.00001" ixz="-0.00000" iyy="0.00295" iyz="-0.00031" izz="0.00057"/>
+      <origin rpy="0.00000 0.00000 0.00000" xyz="0.01944 -0.00693 -0.05951"/>
+      <mass value="0.85000"/>
+    </inertial>
+    <collision name="L_Arm_collision">
+      <origin rpy="-0.09437 0.00000 0.00000" xyz="0.01969 -0.00538 -0.05894"/>
+      <geometry>
+        <box size="0.04085 0.08711 0.19733"/>
+      </geometry>
+    </collision>
+    <visual name="L_Arm">
+      <origin rpy="1.57079633 0.00000 0.00000" xyz="-0.00000 0.00000 0.00000"/>
+      <geometry>
+        <mesh filename="../meshes/obj/L_Arm.obj" scale="1.00000 1.00000 1.00000"/>
+      </geometry>
+    </visual>
+  </link>
+  <link name="l_forearm">
+    <inertial>
+      <inertia ixx="0.00063" ixy="-0.00000" ixz="-0.00001" iyy="0.00061" iyz="-0.00007" izz="0.00003"/>
+      <origin rpy="0.00000 0.00000 0.00000" xyz="-0.01689 -0.00721 -0.10326"/>
+      <mass value="0.12000"/>
+    </inertial>
+    <collision name="L_Forearm_collision">
+      <origin rpy="-0.09719 0.00000 0.00000" xyz="-0.01756 -0.00403 -0.07785"/>
+      <geometry>
+        <box size="0.02168 0.04390 0.17549"/>
+      </geometry>
+    </collision>
+    <visual name="L_Forearm">
+      <origin rpy="1.57079633 0.00000 0.00000" xyz="-0.00000 0.00000 0.00000"/>
+      <geometry>
+        <mesh filename="../meshes/obj/L_Forearm.obj" scale="1.00000 1.00000 1.00000"/>
+      </geometry>
+    </visual>
+  </link>
+  <link name="l_foot">
+    <inertial>
+      <inertia ixx="0.00006" ixy="-0.00000" ixz="0.00000" iyy="0.00001" iyz="-0.00000" izz="0.00006"/>
+      <origin rpy="0.00000 0.00000 0.00000" xyz="0.00004 -0.01759 -0.01344"/>
+      <mass value="0.06000"/>
+    </inertial>
+    <collision name="L_Foot_collision">
+      <origin rpy="0.00000 0.00000 0.00000" xyz="0.00000 -0.02129 -0.02427"/>
+      <geometry>
+        <box size="0.03697 0.12436 0.00963"/>
+      </geometry>
+    </collision>
+    <visual name="L_Foot">
+      <origin rpy="1.57079633 0.00000 0.00000" xyz="-0.00000 0.00000 0.00000"/>
+      <geometry>
+        <mesh filename="../meshes/obj/Foot.obj" scale="1.00000 1.00000 1.00000"/>
+      </geometry>
+    </visual>
+  </link>
+  <link name="r_hip">
+    <inertial>
+      <inertia ixx="0.00017" ixy="-0.00002" ixz="0.00000" iyy="0.00003" iyz="-0.00000" izz="0.00019"/>
+      <origin rpy="0.00000 0.00000 0.00000" xyz="-0.01698 0.06739 0.00000"/>
+      <mass value="0.08000"/>
+    </inertial>
+    <visual name="R_Hip_Connector">
+      <origin rpy="3.14159 1.57079633 3.14159" xyz="-0.00000 -0.00000 -0.00000"/>
+      <geometry>
+        <mesh filename="../meshes/obj/Hip_Connector.obj" scale="1.00000 1.00000 1.00000"/>
+      </geometry>
+    </visual>
+  </link>
+  <link name="r_arm">
+    <inertial>
+      <inertia ixx="0.00330" ixy="-0.00001" ixz="0.00000" iyy="0.00295" iyz="-0.00031" izz="0.00057"/>
+      <origin rpy="0.00000 0.00000 0.00000" xyz="-0.01944 -0.00694 -0.05960"/>
+      <mass value="0.85000"/>
+    </inertial>
+    <collision name="R_Arm_collision">
+      <origin rpy="-0.09437 0.00000 0.00000" xyz="-0.01969 -0.00538 -0.05893"/>
+      <geometry>
+        <box size="0.04085 0.08711 0.19733"/>
+      </geometry>
+    </collision>
+    <visual name="R_Arm">
+      <origin rpy="1.57079633 0.00000 0.00000" xyz="-0.00000 -0.00000 0.00000"/>
+      <geometry>
+        <mesh filename="../meshes/obj/R_Arm.obj" scale="1.00000 1.00000 1.00000"/>
+      </geometry>
+    </visual>
+  </link>
+  <link name="r_forearm">
+    <inertial>
+      <inertia ixx="0.00063" ixy="0.00000" ixz="0.00001" iyy="0.00061" iyz="-0.00007" izz="0.00003"/>
+      <origin rpy="0.00000 0.00000 0.00000" xyz="0.01689 -0.00721 -0.10326"/>
+      <mass value="0.12000"/>
+    </inertial>
+    <collision name="R_Forearm_collision">
+      <origin rpy="-0.09719 0.00000 0.00000" xyz="0.01756 -0.00403 -0.07785"/>
+      <geometry>
+        <box size="0.02168 0.04390 0.17549"/>
+      </geometry>
+    </collision>
+    <visual name="R_Forearm">
+      <origin rpy="1.57079633 0.00000 0.00000" xyz="-0.00000 -0.00000 -0.00000"/>
+      <geometry>
+        <mesh filename="../meshes/obj/R_Forearm.obj" scale="1.00000 1.00000 1.00000"/>
+      </geometry>
+    </visual>
+  </link>
+  <link name="r_foot">
+    <inertial>
+      <inertia ixx="0.00006" ixy="-0.00000" ixz="0.00000" iyy="0.00001" iyz="-0.00000" izz="0.00006"/>
+      <origin rpy="0.00000 0.00000 0.00000" xyz="0.00004 -0.01759 -0.01344"/>
+      <mass value="0.06000"/>
+    </inertial>
+    <collision name="R_Foot_collision">
+      <origin rpy="0.00000 0.00000 0.00000" xyz="0.00000 -0.02129 -0.02427"/>
+      <geometry>
+        <box size="0.03697 0.12436 0.00963"/>
+      </geometry>
+    </collision>
+    <visual name="R_Foot">
+      <origin rpy="1.57079633 0.00000 0.00000" xyz="0.00000 -0.00000 -0.00000"/>
+      <geometry>
+        <mesh filename="../meshes/obj/Foot.obj" scale="1.00000 1.00000 1.00000"/>
+      </geometry>
+    </visual>
+  </link>
+</robot>

@@ -1,0 +1,137 @@
+<mujoco model="BERNARD">
+  <default>
+    <default class="robot">
+      <default class="motor">
+        <motor ctrlrange="-9 9" ctrllimited="true"/>
+      </default>
+      <default class="visual">
+        <geom material="visualgeom" contype="0" conaffinity="0" group="2" />
+      </default>
+      <default class="collision">
+        <geom material="collision_material" condim="3" contype="0" conaffinity="1" priority="1" group="1" solref="0.005 1" friction="1 0.01 0.01"/>
+        <equality solimp="0.99 0.999 1e-05" solref="0.005 1"/>
+      </default>
+    </default>
+  </default>
+
+  <compiler angle="radian" />
+
+  <asset>
+    <texture type="skybox" builtin="gradient" rgb1=".3 .5 .7" rgb2="0 0 0" width="32" height="512"/>
+    <material name="default_material" rgba="0.7 0.7 0.7 1" />
+    <material name="collision_material" rgba="1.0 0.28 0.1 0.9" />
+    <mesh name="Body.obj" file="../meshes/obj/Body.obj" />
+    <mesh name="Hip_Connector.obj" file="../meshes/obj/Hip_Connector.obj" />
+    <mesh name="L_Arm.obj" file="../meshes/obj/L_Arm.obj" />
+    <mesh name="L_Forearm.obj" file="../meshes/obj/L_Forearm.obj" />
+    <mesh name="Foot.obj" file="../meshes/obj/Foot.obj" />
+    <mesh name="R_Arm.obj" file="../meshes/obj/R_Arm.obj" />
+    <mesh name="R_Forearm.obj" file="../meshes/obj/R_Forearm.obj" />
+    <texture name="grid" type="2d" builtin="checker" width="512" height="512" rgb1=".1 .2 .3" rgb2=".2 .3 .4"/>
+    <material name="grid" texture="grid" texrepeat="1 1" texuniform="true" reflectance=".2"/>
+  </asset>
+
+  <worldbody>
+    <geom name="floor" size="0 0 .05" type="plane" material="grid" condim="3"/>
+    <light name="spotlight" mode="targetbodycom" target="body" diffuse=".8 .8 .8" specular="0.3 0.3 0.3" pos="0 -6 4" cutoff="30"/>
+    <body name="body" pos="0.00000000 0.00000000 0.33756500" quat="1 0 0 0" childclass="robot">
+      <camera name="back" pos="-3 0 1" xyaxes="0 -1 0 1 0 2" mode="trackcom"/>
+      <camera name="side" pos="0 -3 1" xyaxes="1 0 0 0 1 2" mode="trackcom"/>
+      <freejoint name="floating_base" />
+      <geom name="body_collision" pos="-0.00001 0.04184 0.00149" quat="1.0 0.0 0.0 0.0" type="box" size="0.071225 0.10264 0.074015" class="collision" />
+      <geom name="body_visual" pos="0.00000 0.00000 0.00000" quat="0.7071067800533724 0.7071067823197227 0.0 0.0" material="default_material" type="mesh" mesh="Body.obj"  class="visual" />
+      <body name="l_hip" pos="0.04994 -0.01531 0.00081" quat="1.0 0.0 0.0 0.0">
+        <joint name="l_hip_joint" type="hinge" ref="0.0" class="motor" range="-0.52360 0.52360" axis="0.00000 1.00000 0.00000" />
+        <inertial pos="0.01698 0.06739 -0.00000" quat="1.0 0.0 0.0 0.0" mass="0.08000" diaginertia="0.00017 3e-05 0.00019" />
+        <geom name="l_hip_visual" pos="0.00000 -0.00000 -0.00000" quat="0.7071067800533724 0.0 -0.7071067823197227 0.0" material="default_material" type="mesh" mesh="Hip_Connector.obj"  class="visual" />
+        <body name="l_arm" pos="0.05205 0.04685 -0.00010" quat="1.0 0.0 0.0 0.0">
+          <joint name="l_arm_joint" type="hinge" ref="0.0" class="motor" range="-0.87266 1.91986" axis="1.00000 0.00000 0.00000" />
+          <inertial pos="0.01944 -0.00693 -0.05951" quat="1.0 0.0 0.0 0.0" mass="0.85000" diaginertia="0.0033 0.00295 0.00057" />
+          <geom name="l_arm_collision" pos="0.01969 -0.00538 -0.05894" quat="0.9988869944123736 -0.04716749297784045 0.0 0.0" type="box" size="0.020425 0.043555 0.098665" class="collision" />
+          <geom name="l_arm_visual" pos="-0.00000 0.00000 0.00000" quat="0.7071067800533724 0.7071067823197227 0.0 0.0" material="default_material" type="mesh" mesh="L_Arm.obj" class="visual" />
+          <body name="l_forearm" pos="-0.00042 -0.01548 -0.11919" quat="1.0 0.0 0.0 0.0">
+            <joint name="l_knee_joint" type="hinge" ref="0.0" class="motor" range="-1.74533 2.09440" axis="-1.00000 0.00000 0.00000" />
+            <inertial pos="-0.01689 -0.00721 -0.10326" quat="1.0 0.0 0.0 0.0" mass="0.12000" diaginertia="0.00063 0.00061 3e-05" />
+            <geom name="l_forearm_collision" pos="-0.01756 -0.00403 -0.07785" quat="0.9988194953258595 -0.04857587628643982 0.0 0.0" type="box" size="0.01084 0.02195 0.087745" class="collision" />
+            <geom name="l_forearm_visual" pos="-0.00000 0.00000 0.00000" quat="0.7071067800533724 0.7071067823197227 0.0 0.0" material="default_material" type="mesh" mesh="L_Forearm.obj"  class="visual" />
+            <body name="l_foot" pos="-0.01749 -0.02000 -0.19000" quat="1.0 0.0 0.0 0.0">
+              <joint name="l_foot_joint" type="hinge" ref="0.0" class="motor" range="-1.39626 1.22173" axis="1.00000 0.00000 0.00000" />
+              <inertial pos="0.00004 -0.01759 -0.01344" quat="1.0 0.0 0.0 0.0" mass="0.06000" diaginertia="6e-05 1e-05 6e-05" />
+              <geom name="l_foot_collision" pos="0.00000 -0.02129 -0.02427" quat="1.0 0.0 0.0 0.0" type="box" size="0.018485 0.06218 0.004815" class="collision" />
+              <geom name="l_foot_visual" pos="-0.00000 0.00000 0.00000" quat="0.7071067800533724 0.7071067823197227 0.0 0.0" material="default_material" type="mesh" mesh="Foot.obj"  class="visual" />
+            </body>
+          </body>
+        </body>
+      </body>
+      <body name="r_hip" pos="-0.04994 -0.01531 0.00081" quat="1.0 0.0 0.0 0.0">
+        <joint name="r_hip_joint" type="hinge" ref="0.0" class="motor" range="-0.52360 0.52360" axis="0.00000 1.00000 0.00000" />
+        <inertial pos="-0.01698 0.06739 0.00000" quat="1.0 0.0 0.0 0.0" mass="0.08000" diaginertia="0.00017 3e-05 0.00019" />
+        <geom name="r_hip_visual" pos="-0.00000 -0.00000 -0.00000" quat="0.7071067823197227 -3.0069821034666984e-15 0.7071067800533724 -3.00698199758758e-15" material="default_material" type="mesh" mesh="Hip_Connector.obj"  class="visual" />
+        <body name="r_arm" pos="-0.05205 0.04685 -0.00010" quat="1.0 0.0 0.0 0.0">
+          <joint name="r_arm_joint" type="hinge" ref="0.0" class="motor" range="-1.91986 0.87266" axis="-1.00000 0.00000 0.00000" />
+          <inertial pos="-0.01944 -0.00694 -0.05960" quat="1.0 0.0 0.0 0.0" mass="0.85000" diaginertia="0.0033 0.00295 0.00057" />
+          <geom name="r_arm_collision" pos="-0.01969 -0.00538 -0.05893" quat="0.9988869944123736 -0.04716749297784045 0.0 0.0" type="box" size="0.020425 0.043555 0.098665" class="collision" />
+          <geom name="r_arm_visual" pos="-0.00000 -0.00000 0.00000" quat="0.7071067800533724 0.7071067823197227 0.0 0.0" material="default_material" type="mesh" mesh="R_Arm.obj"  class="visual" />
+          <body name="r_forearm" pos="0.00042 -0.01548 -0.11919" quat="1.0 0.0 0.0 0.0">
+            <joint name="r_knee_joint" type="hinge" ref="0.0" class="motor" range="-2.09440 1.74533" axis="1.00000 0.00000 0.00000" />
+            <inertial pos="0.01689 -0.00721 -0.10326" quat="1.0 0.0 0.0 0.0" mass="0.12000" diaginertia="0.00063 0.00061 3e-05" />
+            <geom name="r_forearm_collision" pos="0.01756 -0.00403 -0.07785" quat="0.9988194953258595 -0.04857587628643982 0.0 0.0" type="box" size="0.01084 0.02195 0.087745" class="collision" />
+            <geom name="r_forearm_visual" pos="-0.00000 -0.00000 -0.00000" quat="0.7071067800533724 0.7071067823197227 0.0 0.0" material="default_material" type="mesh" mesh="R_Forearm.obj"  class="visual" />
+            <body name="r_foot" pos="0.01749 -0.02000 -0.19000" quat="1.0 0.0 0.0 0.0">
+              <joint name="r_foot_joint" type="hinge" ref="0.0" class="motor" range="-1.39626 1.22173" axis="1.00000 0.00000 0.00000" />
+              <inertial pos="0.00004 -0.01759 -0.01344" quat="1.0 0.0 0.0 0.0" mass="0.06000" diaginertia="6e-05 1e-05 6e-05" />
+              <geom name="r_foot_collision" pos="0.00000 -0.02129 -0.02427" quat="1.0 0.0 0.0 0.0" type="box" size="0.018485 0.06218 0.004815" class="collision" />
+              <geom name="r_foot_visual" pos="0.00000 -0.00000 -0.00000" quat="0.7071067800533724 0.7071067823197227 0.0 0.0" material="default_material" type="mesh" mesh="Foot.obj"  class="visual" />
+            </body>
+          </body>
+        </body>
+      </body>
+      <site name="body_site" pos="0 0 0" quat="1 0 0 0" />
+      <camera name="front_camera" mode="track" fovy="90.0" quat="4.329780281177467e-17 4.329780281177466e-17 0.7071067811865475 0.7071067811865476" pos="0.0 2.0 0.5" />
+      <camera name="side_camera" mode="track" fovy="90.0" quat="-0.5 -0.4999999999999999 0.5 0.5000000000000001" pos="-2.0 0.0 0.5" />
+    </body>
+  </worldbody>
+
+  <actuator>
+    <motor name="l_hip_joint_ctrl" joint="l_hip_joint" class="motor" gear="1" />
+    <motor name="l_arm_joint_ctrl" joint="l_arm_joint" class="motor" gear="1" />
+    <motor name="l_knee_joint_ctrl" joint="l_knee_joint" class="motor" gear="1" />
+    <!-- <motor name="l_foot_joint_ctrl" joint="l_foot_joint" class="motor" gear="1" /> -->
+    <motor name="r_hip_joint_ctrl" joint="r_hip_joint" class="motor" gear="1" />
+    <motor name="r_arm_joint_ctrl" joint="r_arm_joint" class="motor" gear="1" />
+    <motor name="r_knee_joint_ctrl" joint="r_knee_joint" class="motor" gear="1" />
+    <!-- <motor name="r_foot_joint_ctrl" joint="r_foot_joint" class="motor" gear="1" /> -->
+  </actuator>
+
+  <contact>
+    <exclude body1="l_arm" body2="l_forearm" />
+    <exclude body1="l_forearm" body2="l_foot" />
+    <exclude body1="r_arm" body2="r_forearm" />
+    <exclude body1="r_forearm" body2="r_foot" />
+  </contact>
+
+  <sensor>
+    <framepos name="body_site_pos" objtype="site" objname="body_site" />
+    <framequat name="body_site_quat" objtype="site" objname="body_site" />
+    <framelinvel name="body_site_linvel" objtype="site" objname="body_site" />
+    <frameangvel name="body_site_angvel" objtype="site" objname="body_site" />
+    <velocimeter name="body_site_vel" site="body_site" />
+  </sensor>
+  <keyframe>
+    <key name="standing_asymetric_pose"
+      qpos="0 0 0.285 1 0 0 0 0 1.23579 1.21103 0.00463 0 -0.858774 -1.3262 0.46278"
+      qvel="0 0 0 0 0 0 0 0 0 0 0 0 0 0"
+      ctrl="0 0 0 0 0 0"
+    />
+    <key name="standing_pose"
+      qpos="0 0 0.3 1 0 0 0 0 0.928591 1.09586 0.1748 0 -0.928592 -1.09586 0.1748"
+      qvel="0 0 0 0 0 0 0 0 0 0 0 0 0 0"
+      ctrl="0 0 0 0 0 0"
+    />
+    <key name="standing_right_leg_pose"
+      qpos="0 0 0.3 0.991447 0 0.130506 0 -0.005236 1.01237 1.28781 0.27952 -0.246092 -1.13804 -1.86366 0.63295"
+      qvel="0 0 0 0 0 0 0 0 0 0 0 0 0 0"
+      ctrl="0 0 0 0 0 0"
+    />
+  </keyframe>
+</mujoco>

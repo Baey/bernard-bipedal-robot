@@ -1,6 +1,6 @@
 mass_moment_of_inertia: # kg m^2
-  Lxx: 0.00361489
-  Lxy: -8.350e-7
+  Lxx: 0.00083429
+  Lxy: 0.00071494
   Lxz: -0.00000253
   Lyx: -8.350e-7
   Lyy: 0.00071356
@@ -9,3 +9,49 @@ mass_moment_of_inertia: # kg m^2
   Lzy: 0.0007078
   Lzz: 0.00308097
 mass: 0.84232217 # kg
+
+# General
+# 	Part Number	R Arm Assembly
+# 	Part Name	R Arm Assembly v15
+# 	Description
+# 	Material Name	(Various)
+
+# Manage
+# 	Item Number
+# 	Lifecycle
+# 	Revision
+# 	State	Working
+# 	Change Order
+
+# Physical
+# 	Mass	851.025 g
+# 	Volume	6.269E+05 mm^3
+# 	Density	0.001 g / mm^3
+# 	Area	1.596E+05 mm^2
+# 	World X,Y,Z	0.00 mm, 0.00 mm, 0.00 mm
+# 	Center of Mass	-16.427 mm, -59.593 mm, 7.322 mm
+# 	Bounding Box
+# 		Length	45.935 mm
+# 		Width	221.14 mm
+# 		Height	110.681 mm
+# 	Moment of Inertia at Center of Mass   (g mm^2)
+# 		Ixx	3.660E+06
+# 		Ixy	-94.367
+# 		Ixz	2165.09
+# 		Iyx	-94.367
+# 		Iyy	5.514E+05
+# 		Iyz	3.586E+05
+# 		Izx	2165.09
+# 		Izy	3.586E+05
+# 		Izz	3.283E+06
+# 	Moment of Inertia at Origin   (g mm^2)
+# 		Ixx	6.728E+06
+# 		Ixy	-8.332E+05
+# 		Ixz	1.045E+05
+# 		Iyx	-8.332E+05
+# 		Iyy	8.267E+05
+# 		Iyz	7.299E+05
+# 		Izx	1.045E+05
+# 		Izy	7.299E+05
+# 		Izz	6.535E+06
+
