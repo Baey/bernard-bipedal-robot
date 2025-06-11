@@ -83,8 +83,7 @@ arm = bpy.data.objects[armature_name]
 pose_bones = arm.pose.bones
 action_name = arm.animation_data.action.name
 
-text_block = bpy.data.texts.get("Log") or bpy.data.texts.new("Log")
-text_block.write(f"Exporting {action_name} animation data...\n")
+print(f"Exporting {action_name} animation data...\n")
 
 # Retrieve scene settings
 fps = bpy.context.scene.render.fps
@@ -94,10 +93,10 @@ frames = list(range(start_frame, end_frame + 1))
 N = len(frames)
 D = len(dof_map)
 B = len(body_bone_names)
-text_block.write(f"FPS: {fps}\n")
-text_block.write(f"Frames: {N}\n")
-text_block.write(f"DOFs: {D}\n")
-text_block.write(f"Bodies: {B}\n")
+print(f"FPS: {fps}\n")
+print(f"Frames: {N}\n")
+print(f"DOFs: {D}\n")
+print(f"Bodies: {B}\n")
 
 # Prepare buffers
 dof_names = np.array(list(dof_map.keys()), dtype='<U32')
@@ -119,7 +118,7 @@ for bone in pose_bones:
     if name in dof_map:
         header.append(f"{name}.{dof_map[name]}")
 
-text_block.write("Iterating through frames...\n")
+print("Iterating through frames...\n")
 bpy.ops.object.mode_set(mode='POSE')
 for i, frame in enumerate(frames):
     bpy.context.scene.frame_set(frame)
@@ -148,17 +147,13 @@ for i, frame in enumerate(frames):
             j = body_idx[body_name]
             mat = arm.matrix_world @ bone.matrix
             pos = arm.matrix_world @ bone.head
-#            quat = (mat.to_quaternion() @ fix_body_rot[bone.name]).normalized()
             quat = (bone.matrix.to_quaternion() @ fix_body_rot[bone.name]).normalized()
-#            parent_matrix = bone.parent.matrix if bone.parent else Matrix.Identity(4)
-#            local_matrix = parent_matrix.inverted() @ bone.matrix
-#            quat = (local_matrix.to_quaternion() @ fix_body_rot[bone.name]).normalized()
             body_positions[i, j] = pos[:]
-            body_rotations[i, j] = np.array([quat.x, quat.y, quat.z, quat.w])
+            body_rotations[i, j] = np.array([quat.w, quat.x, quat.y, quat.z])
     dof_positions_csv.append(frame_data)
 
-text_block.write("All frames processed!\n")
-text_block.write("Calculating linear velocities...\n")
+print("All frames processed!\n")
+print("Calculating linear velocities...\n")
 dt = 1.0 / fps
 dof_velocities[1:-1] = (dof_positions[2:] - dof_positions[:-2]) / (2 * dt)
 dof_velocities[0] = dof_velocities[1]
@@ -168,14 +163,14 @@ body_linear_velocities[1:-1] = (body_positions[2:] - body_positions[:-2]) / (2 *
 body_linear_velocities[0] = body_linear_velocities[1]
 body_linear_velocities[-1] = body_linear_velocities[-2]
 
-text_block.write("Calculating angular velocities...\n")
+print("Calculating angular velocities...\n")
 for i in range(1, N - 1):
     for j in range(B):
         q_prev = body_rotations[i - 1, j]
         q_next = body_rotations[i + 1, j]
 
-        q1 = R.from_quat(q_prev)
-        q2 = R.from_quat(q_next)
+        q1 = R.from_quat(q_prev, scalar_first=True)
+        q2 = R.from_quat(q_next, scalar_first=True)
 
         q_delta = q2 * q1.inv()
         ang_vel = q_delta.as_rotvec() / (2 * dt)
@@ -184,8 +179,8 @@ for i in range(1, N - 1):
 body_angular_velocities[0] = body_angular_velocities[1]
 body_angular_velocities[-1] = body_angular_velocities[-2]
 
-text_block.write("All velocities calculated!\n")
-text_block.write("Exporting data to .npz file...\n")
+print("All velocities calculated!\n")
+print("Exporting data to .npz file...\n")
 np.savez(f"/Users/blazejszargut/Documents/bernard-bipedal-robot/motion/dataset/bernard_{action_name}.npz",
          fps=np.int64(fps),
          dof_names=dof_names,
